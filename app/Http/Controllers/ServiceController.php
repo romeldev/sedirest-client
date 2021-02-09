@@ -9,31 +9,41 @@ class ServiceController extends Controller
 {
     public function print(Request $request)
     {
-        $dataPrint = [
-            'report_name' => 'test',
-            'title' => 'prueba'
-        ];
+        $reports = $request->all();
 
-        $print = new PrintService;
-        $print->conn_type =  1;
-        $print->conn_name =  'CAJA';
-        $resPrint = $print->printView($dataPrint['report_name'], $dataPrint);
-        return response()->json($resPrint);
-
-
-        // $dataPrint = $request->all();
-        // // dd('dataPrint', $dataPrint);
-        // $print = new PrintService;
-        // $print->conn_type =  $dataPrint['conn_type'];
-        // $print->conn_name =  $dataPrint['conn_name'];
-        // $resPrint = $print->printView($dataPrint['report_name'], $dataPrint);
-        // return response()->json($resPrint);
+        $resPrinter = [];
+        foreach($reports as $report) {
+            $resPrinter[] = (new PrintService)->print($report);
+        }
+        return response()->json($resPrinter);
     }
 
     public function printShipping(Request $request)
     {
-        $dataPrint = $request->all();
-        $res = PrintService::printShippingBill($dataPrint);
-        return response()->json($res);
+        $data = $request->all();
+        $printInKitchen = null;
+        $printInBox = null;
+        $printedIn = [];
+
+        if( isset($data['data_kitchen'])) {
+            $printInKitchen = (new PrintService)->print($data['data_kitchen']);
+            if($printInKitchen['status']) $printedIn[] = __u('kitchen');
+        }
+        
+        if( isset($data['data_box'])) {
+            $printInBox = (new PrintService)->print($data['data_box']);
+            if($printInBox['status']) $printedIn[] = __u('box');
+        }
+
+        $resPrint['status'] = count($printedIn)!=0;
+        $resPrint['message'] = count($printedIn)==0? __c('nothing_print'): __c('print_in').': '.implode(',', $printedIn);
+
+        $resPrint['meta'] = [
+            'res_print_kitchen' => $printInKitchen,
+            'res_print_box' => $printInBox,
+        ];
+
+        return response()->json($resPrint);
     }
+
 }

@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/service/print/reports', 'ServiceController@printReport');
+Route::post('/service/print/shipping', 'ServiceController@printShipping');
+
+
+Route::get('/free', function(){
+    return 'free route';
+});
