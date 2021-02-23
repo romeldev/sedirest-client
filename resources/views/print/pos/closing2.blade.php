@@ -27,6 +27,12 @@
             <td class="text-left">{{ __c('closing_user') }}</td>
             <td class="text-right">{{ $item['closing_user_name'] }}</td>
         </tr>
+
+
+        <tr>
+            <td class="text-left">{{ __c('closing_exact') }}</td>
+            <td class="text-right">{{$item['is_exact']? __u('yes'): __('no') }}</td>
+        </tr>
     </thead>
 
     <tbody>

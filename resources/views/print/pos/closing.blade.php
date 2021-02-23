@@ -57,13 +57,13 @@
         </tr>
 
         {{-- opening_amount --}}
-        <tr>
+        {{-- <tr>
             <td class="text-left" style="padding-left: 15px;">{{ __c('opening_amount') }}</td>
             <td class="text-right">--</td>
             <td class="text-right">--</td>
             <td class="text-right">{{ number_format($item['opening_amount'], $decimals) }}</td>
             <td class="text-right">{{ number_format($item['opening_amount'], $decimals) }}</td>
-        </tr>
+        </tr> --}}
 
         {{-- sales --}}
         <tr>
@@ -130,15 +130,41 @@
         </tr>
 
         {{-- retire_amount --}}
-        <tr>
+        {{-- <tr>
             <td class="text-left" style="padding-left: 15px;">{{ __c('retire_amount') }}</td>
             <td class="text-right">--</td>
             <td class="text-right">--</td>
             <td class="text-right">{{ number_format($item['retire_amount'], $decimals) }}</td>
             <td class="text-right">{{ number_format($item['retire_amount'], $decimals) }}</td>
-        </tr>
+        </tr> --}}
         
     </tbody>
+
+    <tfoot>
+        {{-- saldo de apertura de caja --}}
+        <tr>
+            <td class="text-left">{{ __c('opening_amount') }}</td>
+            <td class="text-right" colspan="4">{{ number_format($item['opening_amount'], $decimals) }}</td>
+        </tr>
+
+        {{-- retiro al cierre de caja --}}
+        <tr>
+            <td class="text-left">{{ __c('retire_amount') }}</td>
+            <td class="text-right" colspan="4">{{ number_format($item['retire_amount'], $decimals) }}</td>
+        </tr>
+
+        {{-- queda en caja --}}
+        <tr>
+            <td class="text-left">{{ __c('closing_amount') }}</td>
+            <td class="text-right" colspan="4">{{ number_format($item['closing_amount'], $decimals) }}</td>
+        </tr>
+
+        {{-- el cierre fue exacto? --}}
+        <tr>
+            <td class="text-left">{{ __c('closing_exact') }}</td>
+            <td class="text-right" colspan="4">{{$item['is_exact']? __u('yes'): __('no') }}</td>
+        </tr>
+    </tfoot>
 
     <tfoot>
         <tr>
@@ -149,6 +175,8 @@
             <td class="text-right">{{ number_format($item['utility'], $decimals) }}</td>
         </tr>
     </tfoot>
+
+    
 
 </table>
 <hr style="border-top: 1px dotted  black;">
