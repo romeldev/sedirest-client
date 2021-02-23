@@ -22,7 +22,7 @@
     "togo": "para llevar",
     "closing": "cierre",
     "opening": "apertura",
-    "collect_credits": "cobro de creditos",
+    "collect_credits": "cobro creditos",
     "sales_by_preparations": "ventas por preparaciones",
     "usage_products": "uso de productos",
     "usage_supplies": "uso de insumos",
@@ -45,6 +45,8 @@
     "print_in": "impreso en",
 
 
+    "inputs": "entradas",
+    "outputs": "salidas",
     "report_opening": "R.APERTURA",
     "report_closing": "R.CIERRE",
     "report_sales_by_preparations": "R.VENTAS",
@@ -54,7 +56,8 @@
     "report_usage_supplies": "R.INSUMOS",
     "report_bill": "R.CUENTA",
     "box_is_closed": "la caja esta cerrada",
-
+    "closing_user": "cierra",
+    "descrip": "descripcion",
 
     "open_user": "abre usuario",
     "close_user": "cierra usuario",
@@ -63,14 +66,15 @@
     "other_inputs": "otras entradas",
     "other_outputs": "otras salidas",
     "retire_amount": "retiro de caja",
-    "payment_purchases": "pago de compras",
+    "payment_purchases": "pago compras",
     "total_cash": "total de efectivo",
     "closing_amount": "saldo al cierre",
     "closing_exact": "cierre exacto",
     "previous_amount": "saldo anterior",
     "yes": "si",
     "no": "no",
-
+    "utility": "utilidad",
+    "opening_amount": "saldo de apertura",
 
     "end": "fin"
 }

@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/service/print/reports', 'ServiceController@printReport');
+Route::post('/service/print/reports', 'ServiceController@print');
 Route::post('/service/print/shipping', 'ServiceController@printShipping');

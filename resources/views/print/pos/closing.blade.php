@@ -9,11 +9,15 @@
 
 </style>
 
+@php
+    $decimals = 1;
+@endphp
+
 <div class="title">{{ $data['title'] }}</div>
 
 @foreach ($data['items'] as $item)
-<table style="width:100%" style=" border-collapse: collapse;">
 
+<table style="width:100%" style=" border-collapse: collapse;">
     <thead>
         <tr>
             <td class="text-left">{{ __c('date')}}:</td>
@@ -28,62 +32,121 @@
             <td class="text-right">{{ $item['closing_user_name'] }}</td>
         </tr>
     </thead>
+</table>
+<br>
 
+<table style="width:100%" style=" border-collapse: collapse;">
+    <thead>
+        <tr>
+            <td>MOV</td>
+            <td class="text-right">CD</td>
+            <td class="text-right">BC</td>
+            <td class="text-right">EF</td>
+            <td class="text-right">TOTAL</td>
+        </tr>
+    </thead>
     <tbody>
-        {{-- (+) opening_amount --}}
+        {{-- inputs --}}
+        {{-- total inputs --}}
         <tr>
-            <td class="text-left">{{ __c('init_cash') }}</td>
-            <td class="text-right">{{ number_format($item['opening_amount'], 2) }}</td>
+            <td class="text-left">{{ __u('inputs') }}</td>
+            <td class="text-right">{{ number_format($item['total_inputs_credit'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_inputs_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_inputs_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_inputs'], $decimals) }}</td>
         </tr>
 
-        {{-- (+) total_sales_cash --}}
+        {{-- opening_amount --}}
         <tr>
-            <td class="text-left">{{ __c('sales') }}</td>
-            <td class="text-right">{{ number_format($item['total_sales_cash'], 2) }}</td>
-        </tr>
-        {{-- (+) total_collect_credit_cash --}}
-        <tr>
-            <td class="text-left">{{ __c('collect_credits') }}</td>
-            <td class="text-right">{{ number_format($item['total_collect_credits_cash'], 2) }}</td>
-        </tr>
-        {{-- (+) total_other_inputs_cash --}}
-        <tr>
-            <td class="text-left">{{ __c('other_inputs') }}</td>
-            <td class="text-right">{{ number_format($item['total_other_inputs_cash'] - $item['opening_amount'], 2) }}</td>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('opening_amount') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['opening_amount'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['opening_amount'], $decimals) }}</td>
         </tr>
 
-        {{-- (-) retire_amount --}}
+        {{-- sales --}}
         <tr>
-            <td class="text-left">{{ __c('retire_amount') }}</td>
-            <td class="text-right">-{{number_format($item['retire_amount'], 2) }}</td>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('sales') }}</td>
+            <td class="text-right">{{ number_format($item['total_sales_credit'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_sales_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_sales_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_sales'], $decimals) }}</td>
         </tr>
-        {{-- (-) total_payment_purchases_cash --}}
+        {{-- sales by method payments --}}
+        @foreach ($item['sales_by_payment_methods'] as $paymentMethod)
         <tr>
-            <td class="text-left">{{ __c('payment_purchases') }}</td>
-            <td class="text-right">-{{number_format($item['total_payment_purchases_cash'], 2) }}</td>
+            <td class="text-left" style="padding-left: 30px;">{{ $paymentMethod['name'] }}</td>
+            <td class="text-right"></td>
+            <td class="text-right">{{ number_format($paymentMethod['amount'], $decimals) }}</td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
         </tr>
-        {{-- (-) total_other_outputs_cash --}}
+        @endforeach
+
+        {{-- collect_credits --}}
         <tr>
-            <td class="text-left">{{ __c('other_outputs') }}</td>
-            <td class="text-right">-{{number_format($item['total_other_outputs_cash'] - $item['retire_amount'], 2) }}</td>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('collect_credits') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['total_collect_credits_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_collect_credits_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_collect_credits'], $decimals) }}</td>
         </tr>
+
+        {{-- other inputs --}}
+        <tr>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('other_inputs') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['total_other_inputs_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_other_inputs_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_other_inputs'], $decimals) }}</td>
+        </tr>
+
+        {{-- outputs --}}
+        {{-- total outputs --}}
+        <tr>
+            <td class="text-left">{{ __u('outputs') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['total_outputs_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_outputs_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_outputs'], $decimals) }}</td>
+        </tr>
+
+        {{-- payment_purchases --}}
+        <tr>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('payment_purchases') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['total_payment_purchases_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_payment_purchases_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_payment_purchases'], $decimals) }}</td>
+        </tr>
+        {{-- outher outputs --}}
+        <tr>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('other_outputs') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['total_other_outputs_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_other_outputs_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['total_other_outputs'], $decimals) }}</td>
+        </tr>
+
+        {{-- retire_amount --}}
+        <tr>
+            <td class="text-left" style="padding-left: 15px;">{{ __c('retire_amount') }}</td>
+            <td class="text-right">--</td>
+            <td class="text-right">--</td>
+            <td class="text-right">{{ number_format($item['retire_amount'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['retire_amount'], $decimals) }}</td>
+        </tr>
+        
     </tbody>
 
     <tfoot>
-        {{-- total_cash --}}
         <tr>
-            <td class="text-left">{{ __c('total_cash') }}</td>
-            <td class="text-right">{{ $item['total_cash'] }}</td>
-        </tr>
-        {{-- closing_amount --}}
-        <tr>
-            <td class="text-left">{{ __c('closing_amount') }}</td>
-            <td class="text-right">{{ $item['closing_amount'] }}</td>
-        </tr>
-        {{-- cierre exacto? --}}
-        <tr>
-            <td class="text-left">{{ __c('closing_exact') }}</td>
-            <td class="text-right">{{$item['is_exact']? __u('yes'): __('no') }}</td>
+            <td class="text-left">{{ __u('utility') }}</td>
+            <td class="text-right">{{ number_format($item['utility_credit'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['utility_bank'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['utility_cash'], $decimals) }}</td>
+            <td class="text-right">{{ number_format($item['utility'], $decimals) }}</td>
         </tr>
     </tfoot>
 
