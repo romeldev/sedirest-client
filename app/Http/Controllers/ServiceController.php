@@ -46,4 +46,11 @@ class ServiceController extends Controller
         return response()->json($resPrint);
     }
 
+    public function viewReport(Request $request, $viewName)
+    {
+        $filename = $viewName.'.html';
+
+        return view('view-report', compact('filename'));
+    }
+
 }

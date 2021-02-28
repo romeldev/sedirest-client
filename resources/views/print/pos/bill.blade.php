@@ -29,6 +29,11 @@
         </tr>
         @endif
 
+        <tr>
+            <td class="td-label text-right">FECHA:</td>
+            <td>{{ $data['mov']['created_at'] }}</td>
+        </tr>
+
         @if (trim($data['client_phone']!=''))
         <tr>
             <td class="td-label text-right">TELEFONO:</td>
@@ -62,6 +67,13 @@
             <td colspan="2">TOTAL</td>
             <td colspan="2">{{ number_format ($data['total'], 2) }}</td>
         </tr>
+
+        @foreach ($data['mov']['payments'] as $payment)
+        <tr class="text-right pr-10">
+            <td colspan="2">{{ $payment['payment_method_name'] }}</td>
+            <td colspan="2">{{ number_format ($payment['amount'], 2) }}</td>
+        </tr>
+        @endforeach
     </tfoot>
 </table>
 
