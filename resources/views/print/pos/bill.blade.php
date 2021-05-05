@@ -7,7 +7,22 @@
         /* border: 1px solid black; */
     }
 
+    .logo-head {
+        display: block;
+    }
+
 </style>
+
+@php
+    // solo mostrar el logo si tiene tiket
+    $logoName = '/img/ticket-logo.png';
+@endphp
+
+@if (file_exists(public_path($logoName)))
+    <div class="logo-head">
+        <img src="{{ asset($logoName) }}" width="100%">
+    </div>
+@endif
 
 <div class="title-command">{{ $data['title'] }}</div>
 

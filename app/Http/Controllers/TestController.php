@@ -14,6 +14,15 @@ class TestController extends Controller
 
     public function index(Request $request)
     {
+
+        //verificar si el archivo logo existe
+
+        $logoName = '/img/ticket-logo.png';
+        $x = file_exists(public_path($logoName));
+
+        dd($x);
+
+        // --fin
         $dataPrint = [
             'report_name' => 'test',
             'title' => 'prueba'
