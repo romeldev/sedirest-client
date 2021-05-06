@@ -15,12 +15,22 @@
 
 @php
     // solo mostrar el logo si tiene tiket
-    $logoName = '/img/ticket-logo.png';
+    $logoName = 'img/ticket-logo.png';
+
+    
 @endphp
 
 @if (file_exists(public_path($logoName)))
+    @php
+        $path = public_path($logoName);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $dataImage = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($dataImage);
+        // dd($data);
+    @endphp
     <div class="logo-head">
-        <img src="{{ asset($logoName) }}" width="100%">
+        {{-- <img src="{{ asset($logoName) }}" width="100%"> --}}
+        <img src="{{ $base64 }}" width="100%">
     </div>
 @endif
 
